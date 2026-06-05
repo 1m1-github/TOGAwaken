@@ -25,16 +25,11 @@ function rmpid(; path=".")
     file = pidfile(path=path)
     isfile(file) && rm(file)
 end
-function isrunning!(; path=".")
+function isrunning(; path=".")
     file = pidfile(path=path)
-    @show file, isfile(file)
     isfile(file) || return false
     pid = readpid(file=file)
-    @show pid
-    prunning = success(`kill -0 $pid`)
-    @show prunning
-    prunning || rmpid(path=path)
-    prunning
+    success(`kill -0 $pid`)
 end
 function openport()
     server = listen(0)
