@@ -1,5 +1,7 @@
 module TOGAwaken
 
+using Sockets
+
 # const TOG = "TheoryOfGod"
 const TOGDIR = ".tog"
 # const GITHUB = "https://github.com"
