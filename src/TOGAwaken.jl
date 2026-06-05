@@ -21,6 +21,7 @@ tog(;path=".") = "ipc://$(globalpath(path=path))/$TOGDIR/tog.ipc" # change to tc
 pidfile(; path=".") = joinpath(path, TOGDIR, "pid")
 readpid(; file=pidfile()) = parse(Int, read(file, String))
 writepid(; path=".") = write(pidfile(path=path), string(getpid()))
+rmpid(; path=".") = rm(pidfile(path=path))
 function isrunning(; path=".")
     file = pidfile(path=path)
     isfile(file) && success(`kill -0 $(readpid(file=file))`)

@@ -1,6 +1,6 @@
 name = "TOGAwaken"
 uuid = "ad6da560-61cf-4870-8d75-c7ac94e30631"
-version = "3.0.0"
+version = "4.0.0"
 authors = ["1m1 <imi@1m1.io>"]
 
 [deps]
