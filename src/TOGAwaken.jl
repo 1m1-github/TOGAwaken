@@ -26,11 +26,11 @@ function awaken(; path=".")
     writepid(path=path)
 end
 writepid(; path=".") = write(pidfile(path=path), string(getpid()))
-sleep = rmpid
 function rmpid(; path=".")
     file = pidfile(path=path)
     isfile(file) && rm(file)
 end
+sleep = rmpid
 function isawake(; path=".")
     file = pidfile(path=path)
     isfile(file) || return false
