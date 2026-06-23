@@ -15,17 +15,23 @@ const TOGDIR = ".tog"
 globalpath(;path=".") = joinpath(pwd(), path)
 router(;path=".") = "ipc://$(globalpath(path=path))/$TOGDIR/router.ipc" # change to tcp if on separate machines
 pub(;path=".") = "ipc://$(globalpath(path=path))/$TOGDIR/pub.ipc" # change to tcp if on separate machines
-tog(;path=".") = "ipc://$(globalpath(path=path))/$TOGDIR/tog.ipc" # change to tcp if on separate machines
+togobserve(;path=".") = "ipc://$(globalpath(path=path))/$TOGDIR/togobserve.ipc" # change to tcp if on separate machines
+togcreate(;path=".") = "ipc://$(globalpath(path=path))/$TOGDIR/togcreate.ipc" # change to tcp if on separate machines
 # const REPLPORT(path) = joinpath(globalpath(path=path), TOGDIR, "replport")
 # writepid() = """write(joinpath("$TOGDIR", "pid"), string(getpid()))"""
 pidfile(; path=".") = joinpath(path, TOGDIR, "pid")
 readpid(; file=pidfile()) = parse(Int, read(file, String))
+function awaken(; path=".")
+    isawake(path=path) && error("TOGgod at $path is already awake.")
+    writepid(path=path)
+end
 writepid(; path=".") = write(pidfile(path=path), string(getpid()))
+sleep = rmpid
 function rmpid(; path=".")
     file = pidfile(path=path)
     isfile(file) && rm(file)
 end
-function isrunning(; path=".")
+function isawake(; path=".")
     file = pidfile(path=path)
     isfile(file) || return false
     pid = readpid(file=file)
